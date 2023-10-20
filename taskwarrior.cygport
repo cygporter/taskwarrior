@@ -9,7 +9,7 @@ HOMEPAGE=https://taskwarrior.org/
 SRC_URI="https://github.com/GothenburgBitFactory/taskwarrior/archive/refs/tags/v${PV}.tar.gz"
 LICENSE=MIT
 
-BUILD_REQUIRES='cmake gcc-fortran ninja libuuid gnutls'
+BUILD_REQUIRES='cmake gcc-fortran ninja libuuid1 libgnutls-devel'
 
 inherit cmake
 
