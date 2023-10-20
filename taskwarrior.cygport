@@ -10,7 +10,7 @@ GIT_URI=https://github.com/GothenburgBitFactory/taskwarrior
 GIT_TAG="v$PV"
 LICENSE=MIT
 
-BUILD_REQUIRES='cmake gcc-fortran ninja libuuid-devel libgnutls-devel'
+BUILD_REQUIRES='cmake gcc-fortran ninja libuuid-devel libgnutls-devel python3'
 
 inherit cmake
 inherit git
