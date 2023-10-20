@@ -27,7 +27,7 @@ src_compile () {
 src_test () {
 	cd "${B}/test"
 	cygmake
-	./run_all -v
+	PATH="${B}/src:$PATH" TASK_USE_PATH=1 TASKD_USE_PATH=1 ./run_all -v
 	./problems
 }
 
