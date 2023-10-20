@@ -17,6 +17,13 @@ inherit git
 
 DIFF_EXCLUDES=cmake.h
 
+src_compile () {
+	lndirs
+	cd "$B"
+	cygcmake -DCMAKE_BUILD_TYPE=release
+	cygmake
+}
+
 src_test () {
 	cd "${B}/test"
 	cygmake VERBOSE=1
