@@ -15,4 +15,11 @@ BUILD_REQUIRES='cmake gcc-fortran ninja libuuid-devel libgnutls-devel'
 inherit cmake
 inherit git
 
+src_test () {
+	cd "${B}/test"
+	cygmake VERBOSE=1
+	./run_all
+	./problems
+}
+
 # vim: set noexpandtab tabstop=8 listchars=tab\:\ \ ,trail\:-,lead\:-
