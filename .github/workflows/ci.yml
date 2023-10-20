@@ -5,3 +5,4 @@ jobs:
     uses: cygporter/workflows/.github/workflows/build-test.yml@v1
     with:
       cygport_file: taskwarrior.cygport
+      bootstrap_packages: cygport git
