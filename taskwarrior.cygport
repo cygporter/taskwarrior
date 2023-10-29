@@ -10,7 +10,8 @@ GIT_URI=https://github.com/GothenburgBitFactory/taskwarrior
 GIT_TAG="v$PV"
 LICENSE=MIT
 
-BUILD_REQUIRES='cmake libuuid-devel libgnutls-devel python3'
+BUILD_REQUIRES='cmake libuuid-devel libgnutls-devel python3 pkg-config
+	bash-completion fish'
 
 inherit cmake
 inherit git
@@ -20,7 +21,7 @@ DIFF_EXCLUDES=cmake.h
 src_compile () {
 	lndirs
 	cd "$B"
-	cygcmake -DCMAKE_BUILD_TYPE=release
+	cygcmake -DCMAKE_BUILD_TYPE=release -DTASK_DOCDIR=share/doc/taskwarrior
 	cygmake
 }
 
@@ -29,6 +30,33 @@ src_test () {
 	cygmake
 	PATH="${B}/src:$PATH" TASK_USE_PATH=1 TASKD_USE_PATH=1 ./run_all -v
 	./problems
+}
+
+src_install () {
+	cd "$B"
+	cyginstall
+
+	# The taskwarrior installer puts actually useful completion and Vim
+	# scripts in the documentation folder.  Put those somewhere more
+	# useful.
+	cd "$D"
+
+	bash_completions_dir="$(pkg-config --variable=completionsdir bash-completion)"
+	bash_completions_dir="${bash_completions_dir#/}"
+	mkdir -p "$bash_completions_dir"
+	mv usr/share/doc/taskwarrior/scripts/bash/task.sh "$bash_completions_dir"/task
+
+	fish_completions_dir="$(pkg-config --variable=completionsdir fish)"
+	fish_completions_dir="${fish_completions_dir#/}"
+	mkdir -p "$fish_completions_dir"
+	mv usr/share/doc/scripts/fish/task.fish "$fish_completions_dir"
+
+	# Seems like there should be a better option than hard-coding this
+	# path, but I couldn't trivially find one.
+	vim_config_dir=usr/share/vim/vimfiles
+	mkdir -p "$vim_config_dir"
+	mv usr/share/doc/taskwarrior/scripts/vim/{ftdetect,syntax} "$vim_config_dir"
+	mv usr/share/doc/taskwarrior/scripts/vim/README usr/share/doc/taskwarrior/vim.README
 }
 
 # vim: set noexpandtab tabstop=8 listchars=tab\:\ \ ,trail\:-,lead\:-
