@@ -1,4 +1,4 @@
-bash-completion
+bash-completion-devel
 cmake
 fish
 libgnutls-devel
