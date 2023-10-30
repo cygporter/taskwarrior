@@ -50,7 +50,7 @@ src_install () {
 	fish_completions_dir="$(pkg-config --variable=completionsdir fish)"
 	fish_completions_dir="${fish_completions_dir#/}"
 	mkdir -p "$fish_completions_dir"
-	mv usr/share/doc/scripts/fish/task.fish "$fish_completions_dir"
+	mv usr/share/doc/taskwarrior/scripts/fish/task.fish "$fish_completions_dir"
 
 	# Seems like there should be a better option than hard-coding this
 	# path, but I couldn't trivially find one.
@@ -58,6 +58,10 @@ src_install () {
 	mkdir -p "$vim_config_dir"
 	mv usr/share/doc/taskwarrior/scripts/vim/{ftdetect,syntax} "$vim_config_dir"
 	mv usr/share/doc/taskwarrior/scripts/vim/README usr/share/doc/taskwarrior/vim.README
+
+	# This script is executable, but the install process loses that flag.
+	# Add it back.
+	chmod +x usr/share/doc/taskwarrior/rc/refresh
 }
 
 # vim: set noexpandtab tabstop=8 listchars=tab\:\ \ ,trail\:-,lead\:-
