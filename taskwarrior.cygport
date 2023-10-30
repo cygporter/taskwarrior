@@ -10,11 +10,12 @@ GIT_URI=https://github.com/GothenburgBitFactory/taskwarrior
 GIT_TAG="v$PV"
 LICENSE=MIT
 
-BUILD_REQUIRES='cmake libuuid-devel libgnutls-devel python3 pkg-config
-	bash-completion fish'
+BUILD_REQUIRES="$(tr '\n' ' ' <build-requires.txt)"
 
 inherit cmake
 inherit git
+
+SRC_URI="$SRC_URI build-requires.txt"
 
 DIFF_EXCLUDES=cmake.h
 

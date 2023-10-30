@@ -1,0 +1,7 @@
+bash-completion
+cmake
+fish
+libgnutls-devel
+libuuid-devel
+pkg-config
+python3
